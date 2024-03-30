@@ -1,0 +1,22 @@
+# IntelliJ
+*.iml
+/.idea
+
+# Gradle
+/.gradle
+/build
+
+# Android Studio
+/local.properties
+local.properties
+
+# Mac OS
+.DS_Store
+
+# Android Studio
+/captures
+.externalNativeBuild
+.cxx
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
