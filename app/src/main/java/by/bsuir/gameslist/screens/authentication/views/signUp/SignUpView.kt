@@ -1,11 +1,9 @@
-package by.bsuir.gameslist.screens.signUp
+package by.bsuir.gameslist.screens.authentication.views.signUp
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,15 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import by.bsuir.gameslist.ui.components.AuthBottomButton
 import by.bsuir.gameslist.ui.components.AuthTextField
-import by.bsuir.gameslist.ui.components.AuthTopBar
 import by.bsuir.gameslist.ui.components.FilledTextButton
 
 @Composable
-fun SignUpRoute(
-    onSignInMove: () -> Unit,
-    onBackClick: () -> Unit,
+fun SignUpView(
+    modifier: Modifier = Modifier,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val email by viewModel.email.collectAsState("")
@@ -30,7 +25,7 @@ fun SignUpRoute(
     val password by viewModel.password.collectAsState("")
     val confirmPassword by viewModel.confirmPassword.collectAsState("")
 
-    SignUpScreen(
+    SignUpView(
         email = email,
         name = name,
         password = password,
@@ -40,56 +35,48 @@ fun SignUpRoute(
         onPasswordChange = viewModel::onPasswordChange,
         onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
         onSignUp = viewModel::signIn,
-        onSignInMove = onSignInMove,
-        onBackClick = onBackClick
+        modifier = modifier
     )
 }
 
 @Composable
-fun SignUpScreen(
+private fun SignUpView(
     email: String,
-    name: String,
-    password: String,
-    confirmPassword: String,
     onEmailChange: (String) -> Unit,
+    name: String,
     onNameChange: (String) -> Unit,
+    password: String,
     onPasswordChange: (String) -> Unit,
+    confirmPassword: String,
     onConfirmPasswordChange: (String) -> Unit,
     onSignUp: () -> Unit,
-    onSignInMove: () -> Unit,
-    onBackClick: () -> Unit
+    modifier: Modifier = Modifier,
 ) {
-    Scaffold(
-        topBar = { AuthTopBar("Sign Up", onBackClick) },
-        bottomBar = { AuthBottomButton("Already have an account? Sign In", onSignInMove) }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(48.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
-        ) {
-            AuthTextField("Email", email, onEmailChange)
-            AuthTextField("Name", name, onNameChange)
-            AuthTextField("Password", password, onPasswordChange)
-            AuthTextField("Confirm Password", confirmPassword, onConfirmPasswordChange)
+    Column(
+        modifier = modifier
+            .padding(48.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
+    ) {
+        AuthTextField("Email", email, onEmailChange)
+        AuthTextField("Name", name, onNameChange)
+        AuthTextField("Password", password, onPasswordChange)
+        AuthTextField("Confirm Password", confirmPassword, onConfirmPasswordChange)
 
-            FilledTextButton(
-                "Sign In",
-                onClick = onSignUp,
-                Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxWidth())
-        }
+        FilledTextButton(
+            "Sign In",
+            onClick = onSignUp,
+            Modifier
+                .padding(top = 16.dp)
+                .fillMaxWidth()
+        )
     }
 }
 
 @Composable
 @Preview(name = "SignUp")
-private fun SignUpScreenPreview() {
-    SignUpScreen(
+private fun SignUpViewPreview() {
+    SignUpView(
         email = "",
         name = "",
         password = "",
@@ -98,9 +85,7 @@ private fun SignUpScreenPreview() {
         onNameChange = {},
         onPasswordChange = {},
         onConfirmPasswordChange = {},
-        onSignUp = {},
-        onSignInMove = {},
-        onBackClick = {}
+        onSignUp = {}
     )
 }
 

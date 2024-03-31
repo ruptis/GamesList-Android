@@ -1,4 +1,4 @@
-package by.bsuir.gameslist.screens.signIn
+package by.bsuir.gameslist.screens.authentication.views.signIn
 
 data class SignInState(
     var validationError: String = "",

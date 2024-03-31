@@ -3,10 +3,9 @@ package by.bsuir.gameslist.app.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import by.bsuir.gameslist.screens.signIn.navigation.navigateToSignIn
-import by.bsuir.gameslist.screens.signIn.navigation.signInScreen
-import by.bsuir.gameslist.screens.signUp.navigation.navigateToSignUp
-import by.bsuir.gameslist.screens.signUp.navigation.signUpScreen
+import by.bsuir.gameslist.screens.authentication.navigation.authenticationScreen
+import by.bsuir.gameslist.screens.authentication.navigation.navigateToSignIn
+import by.bsuir.gameslist.screens.authentication.navigation.navigateToSignUp
 import by.bsuir.gameslist.screens.welcome.navigation.WELCOME_ROUTE
 import by.bsuir.gameslist.screens.welcome.navigation.welcomeScreen
 
@@ -21,12 +20,7 @@ fun NavGraphBuilder.authenticationGraph(navController: NavController) {
             onSignInMove = { navController.navigateToSignIn() },
             onSignUpMove = { navController.navigateToSignUp() }
         )
-        signInScreen(
-            onSignUpMove = { navController.navigateToSignUp() },
-            onBackClick = { navController.popBackStack() }
-        )
-        signUpScreen(
-            onSignInMove = { navController.navigateToSignIn() },
+        authenticationScreen(
             onBackClick = { navController.popBackStack() }
         )
     }

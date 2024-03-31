@@ -1,17 +1,16 @@
-package by.bsuir.gameslist.screens.signUp
+package by.bsuir.gameslist.screens.authentication.views.signIn
 
 import android.util.Patterns
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import by.bsuir.gameslist.screens.signIn.SignInState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
+class SignInViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -21,29 +20,15 @@ class SignUpViewModel @Inject constructor(
     private val _email: MutableStateFlow<String> = MutableStateFlow("")
     val email: StateFlow<String> = _email.asStateFlow()
 
-    private val _name: MutableStateFlow<String> = MutableStateFlow("")
-    val name: StateFlow<String> = _name.asStateFlow()
-
     private val _password: MutableStateFlow<String> = MutableStateFlow("")
     val password: StateFlow<String> = _password.asStateFlow()
-
-    private val _confirmPassword: MutableStateFlow<String> = MutableStateFlow("")
-    val confirmPassword: StateFlow<String> = _confirmPassword.asStateFlow()
 
     fun onEmailChange(email: String) {
         _email.value = email
     }
 
-    fun onNameChange(name: String) {
-        _name.value = name
-    }
-
     fun onPasswordChange(password: String) {
         _password.value = password
-    }
-
-    fun onConfirmPasswordChange(confirmPassword: String) {
-        _confirmPassword.value = confirmPassword
     }
 
     fun signIn() {
