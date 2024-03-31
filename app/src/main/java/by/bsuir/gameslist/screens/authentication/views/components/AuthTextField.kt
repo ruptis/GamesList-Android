@@ -1,4 +1,4 @@
-package by.bsuir.gameslist.ui.components
+package by.bsuir.gameslist.screens.authentication.views.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text

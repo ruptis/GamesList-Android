@@ -24,5 +24,4 @@ fun NavGraphBuilder.authenticationGraph(navController: NavController) {
             onBackClick = { navController.popBackStack() }
         )
     }
-
 }

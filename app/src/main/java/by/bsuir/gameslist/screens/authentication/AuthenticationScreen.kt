@@ -10,10 +10,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import by.bsuir.gameslist.screens.authentication.views.components.AuthBottomButton
+import by.bsuir.gameslist.screens.authentication.views.components.AuthTopBar
 import by.bsuir.gameslist.screens.authentication.views.signIn.SignInView
 import by.bsuir.gameslist.screens.authentication.views.signUp.SignUpView
-import by.bsuir.gameslist.ui.components.AuthBottomButton
-import by.bsuir.gameslist.ui.components.AuthTopBar
 
 @Composable
 fun AuthenticationScreen(

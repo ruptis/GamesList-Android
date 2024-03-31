@@ -1,8 +1,10 @@
 package by.bsuir.gameslist.screens.authentication.views.signIn
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import by.bsuir.gameslist.service.AuthenticationService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val _authenticationService: AuthenticationService
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<SignInState> = MutableStateFlow(SignInState())
@@ -32,7 +35,10 @@ class SignInViewModel @Inject constructor(
     }
 
     fun signIn() {
-        // TODO Implement sign in logic
+        Log.d("SignInViewModel", "signIn: ")
+        val email = _email.value
+        val password = _password.value
+        _authenticationService.signIn(email, password)
     }
     private fun validateEmail(email: String): Boolean =  Patterns.EMAIL_ADDRESS.matcher(email).matches()
 

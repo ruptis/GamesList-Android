@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import by.bsuir.gameslist.ui.components.AuthTextField
+import by.bsuir.gameslist.screens.authentication.views.components.AuthTextField
 import by.bsuir.gameslist.ui.components.FilledTextButton
 
 @Composable
@@ -64,7 +64,7 @@ private fun SignUpView(
         AuthTextField("Confirm Password", confirmPassword, onConfirmPasswordChange)
 
         FilledTextButton(
-            "Sign In",
+            "Sign Up",
             onClick = onSignUp,
             Modifier
                 .padding(top = 16.dp)

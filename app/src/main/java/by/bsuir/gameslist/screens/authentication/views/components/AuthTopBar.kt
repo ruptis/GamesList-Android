@@ -1,4 +1,4 @@
-package by.bsuir.gameslist.ui.components
+package by.bsuir.gameslist.screens.authentication.views.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
