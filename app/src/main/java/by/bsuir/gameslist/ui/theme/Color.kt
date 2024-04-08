@@ -2,6 +2,16 @@ package by.bsuir.gameslist.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val status_playing_light = Color(0xFF754ABB)
+val status_planning_light = Color(0xFFE2AB08)
+val status_passed_light = Color(0xFF81EA9A)
+val status_abandoned_light = Color(0xFFB41919)
+
+val status_playing_dark = Color(0xFF754ABB)
+val status_planning_dark = Color(0xFFE2AB08)
+val status_passed_dark = Color(0xFF81EA9A)
+val status_abandoned_dark = Color(0xFFB41919)
+
 val md_theme_light_primary = Color(0xFF8B3F96)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
 val md_theme_light_primaryContainer = Color(0xFFFFD6FE)

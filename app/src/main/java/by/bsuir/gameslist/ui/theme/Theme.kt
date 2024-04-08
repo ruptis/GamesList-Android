@@ -8,7 +8,36 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+
+@Immutable
+data class StatusColors(
+    val playing: Color = Color.Unspecified,
+    val planning: Color = Color.Unspecified,
+    val passed: Color = Color.Unspecified,
+    val abandoned: Color = Color.Unspecified
+)
+
+private val LightStatusColors = StatusColors(
+    playing = status_playing_light,
+    planning = status_planning_light,
+    passed = status_passed_light,
+    abandoned = status_abandoned_light
+)
+
+private val DarkStatusColors = StatusColors(
+    playing = status_playing_dark,
+    planning = status_planning_dark,
+    passed = status_passed_dark,
+    abandoned = status_abandoned_dark
+)
+
+private val LocalStatusColors = staticCompositionLocalOf { StatusColors() }
 
 private val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -75,6 +104,11 @@ private val DarkColorScheme = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+val MaterialTheme.statusColors: StatusColors
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalStatusColors.current
+
 @Composable
 fun GamesListTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -92,9 +126,13 @@ fun GamesListTheme(
         else -> LightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    val statusColors = if (darkTheme) DarkStatusColors else LightStatusColors
+
+    CompositionLocalProvider(value = LocalStatusColors provides statusColors) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }

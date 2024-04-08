@@ -25,7 +25,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import by.bsuir.gameslist.screens.home.HomeScreen
-import by.bsuir.gameslist.screens.home.mockGame
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +55,7 @@ fun MainScreen(
                 .padding(paddingValues)
         ) {
             composable(MainScreenTab.HOME.route) {
-                HomeScreen(games = (1..10).map { mockGame() }, modifier = Modifier.nestedScroll(topBarScrollBehavior.nestedScrollConnection))
+                HomeScreen(modifier = Modifier.nestedScroll(topBarScrollBehavior.nestedScrollConnection))
             }
             composable(MainScreenTab.COLLECTION.route) {
                 Box {
