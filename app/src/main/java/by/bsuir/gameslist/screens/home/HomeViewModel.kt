@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-
 ) : ViewModel() {
     private var _games : MutableStateFlow<List<Game>> = MutableStateFlow((1..10).map { Game.mockGame() })
     var games: StateFlow<List<Game>> = _games
@@ -19,9 +18,5 @@ class HomeViewModel @Inject constructor(
         val index = updatedGames.indexOf(game)
         updatedGames[index] = game.copy(status = status)
         _games.value = updatedGames
-    }
-
-    fun onCardClick(game: Game) {
-        // Handle card click
     }
 }

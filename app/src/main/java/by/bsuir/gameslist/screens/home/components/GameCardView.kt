@@ -30,7 +30,8 @@ fun GameCardView(
     modifier: Modifier = Modifier
 ) {
     ElevatedCard(
-        onClick = onClick, modifier = modifier.height(160.dp)
+        onClick = onClick,
+        modifier = modifier.height(160.dp)
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Box(

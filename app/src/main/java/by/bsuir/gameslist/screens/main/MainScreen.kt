@@ -1,30 +1,23 @@
 package by.bsuir.gameslist.screens.main
 
-import android.util.Log
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavHostController
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import by.bsuir.gameslist.screens.home.HomeScreen
+import by.bsuir.gameslist.app.navigation.MAIN_TABS_GRAPH
+import by.bsuir.gameslist.app.navigation.mainTabsGraph
+import by.bsuir.gameslist.screens.main.components.BottomBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,85 +27,36 @@ fun MainScreen(
     val navController = rememberNavController()
 
     val topBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val currentDestination = navController.currentBackStackEntryAsState().value?.destination
+    val screenTitle =
+        MainScreenTab.fromRoute(currentDestination?.route ?: MainScreenTab.HOME.route).title
 
     Scaffold(
         bottomBar = {
             BottomBar(
-                navController = navController
+                navController = navController,
+                currentDestination = currentDestination
             )
         },
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Games") },
-                scrollBehavior = topBarScrollBehavior
+                title = { Text(screenTitle) },
+                scrollBehavior = topBarScrollBehavior,
             )
         },
+        modifier = modifier,
+        contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = MainScreenTab.HOME.route,
+            startDestination = MAIN_TABS_GRAPH,
             modifier = modifier
                 .padding(paddingValues)
+                .consumeWindowInsets(paddingValues)
         ) {
-            composable(MainScreenTab.HOME.route) {
-                HomeScreen(modifier = Modifier.nestedScroll(topBarScrollBehavior.nestedScrollConnection))
-            }
-            composable(MainScreenTab.COLLECTION.route) {
-                Box {
-                    Text(MainScreenTab.COLLECTION.title)
-                }
-            }
-            composable(MainScreenTab.PROFILE.route) {
-                Box {
-                    Text(MainScreenTab.PROFILE.title)
-                }
-            }
-
+            mainTabsGraph(navController, topBarScrollBehavior.nestedScrollConnection)
         }
     }
-}
-
-@Composable
-fun BottomBar(navController: NavHostController) {
-    BottomBar(
-        tabs = listOf(
-            MainScreenTab.HOME,
-            MainScreenTab.COLLECTION,
-            MainScreenTab.PROFILE
-        ),
-        navController = navController
-    )
-}
-
-@Composable
-fun BottomBar(
-    tabs: List<MainScreenTab>,
-    navController: NavHostController
-) {
-    val currentDestination = navController.currentBackStackEntryAsState().value?.destination
-
-    NavigationBar {
-        tabs.forEach { tab ->
-            val selected = currentDestination.isSelected(tab.route)
-            Log.d("BottomBar", "selected: $selected")
-
-            NavigationBarItem(
-                selected = selected,
-                onClick = { navController.navigate(tab.route) },
-                icon = {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = if (selected) tab.selectedIcon else tab.icon),
-                        contentDescription = tab.title
-                    )
-                },
-                label = { Text(tab.title) }
-            )
-        }
-    }
-}
-
-private fun NavDestination?.isSelected(route: String): Boolean {
-    return this?.hierarchy?.any { it.route?.contains(route) ?: false } ?: false
 }
 
 @Preview(name = "MainScreen")

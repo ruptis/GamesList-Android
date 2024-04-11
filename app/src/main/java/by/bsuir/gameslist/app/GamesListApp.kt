@@ -6,12 +6,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import by.bsuir.gameslist.app.navigation.AUTHENTICATION_GRAPH
 import by.bsuir.gameslist.app.navigation.authenticationGraph
-import by.bsuir.gameslist.screens.main.MainScreen
+import by.bsuir.gameslist.screens.main.navigation.MAIN_ROUTE
+import by.bsuir.gameslist.screens.main.navigation.mainScreen
 
 @Composable
 fun GamesListApp(
@@ -21,13 +20,12 @@ fun GamesListApp(
 
     val isAuthenticated by appViewModel.isAuthenticated.collectAsState()
 
-    NavHost(navController, startDestination = if (isAuthenticated) "main" else AUTHENTICATION_GRAPH) {
+    NavHost(
+        navController,
+        startDestination = if (isAuthenticated) MAIN_ROUTE else AUTHENTICATION_GRAPH
+    ) {
         authenticationGraph(navController)
-        navigation(route = "main", startDestination = "mains") {
-            composable("mains") {
-                MainScreen()
-            }
-        }
+        mainScreen()
     }
 }
 

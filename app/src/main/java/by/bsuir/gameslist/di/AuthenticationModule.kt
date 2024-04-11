@@ -13,7 +13,7 @@ import javax.inject.Singleton
 abstract class AuthenticationModule {
     @Binds
     @Singleton
-    abstract fun bindAuthenticationService(
+    internal abstract fun bindAuthenticationService(
         authenticationService: MockAuthenticationService
     ): AuthenticationService
 }

@@ -22,7 +22,7 @@ data class Game(
     }
 
     companion object {
-        fun mockGame(id: String = "0"): Game {
+        fun mockGame(id: String = "0", status: Status? = null): Game {
             return Game(
                 id = id,
                 title = "Game Title",
@@ -37,7 +37,8 @@ data class Game(
                 platformsData = listOf(
                     Platform("0", "PC", "PC"),
                     Platform("1", "PlayStation 5", "PS5")
-                )
+                ),
+                status = status
             )
         }
     }
