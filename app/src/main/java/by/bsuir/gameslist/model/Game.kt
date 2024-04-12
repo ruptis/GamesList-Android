@@ -32,7 +32,7 @@ data class Game(
                 genres = listOf("Action", "Adventure"),
                 developer = "Developer",
                 publisher = "Publisher",
-                screenshots = listOf(""),
+                screenshots = listOf("", "", "", "", "", "", ""),
                 cover = "",
                 platformsData = listOf(
                     Platform("0", "PC", "PC"),
@@ -44,8 +44,3 @@ data class Game(
     }
 }
 
-data class Platform(
-    var id: String,
-    var name: String,
-    var abbreviation: String
-)

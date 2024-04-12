@@ -1,63 +1,106 @@
 package by.bsuir.gameslist.screens.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.activity.compose.BackHandler
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.AnimatedPane
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import by.bsuir.gameslist.model.Game
+import by.bsuir.gameslist.model.Response
 import by.bsuir.gameslist.screens.home.components.GameCardView
+import by.bsuir.gameslist.ui.components.GameDetailsView
+import by.bsuir.gameslist.ui.components.GameListView
 
 @Composable
 fun HomeScreen(
-    onGameCardClick: (Game) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val games by viewModel.games.collectAsState(emptyList())
+    val games by viewModel.games.collectAsStateWithLifecycle()
+    val selectedGame by viewModel.selectedGame.collectAsStateWithLifecycle()
 
-    HomeScreen(
-        games = games,
-        onCardClick = onGameCardClick,
-        onStatusChange = viewModel::changeGameStatus,
+    when (val response = games) {
+        is Response.Loading -> {
+            // Loading state
+        }
+        is Response.Error -> {
+            // Error state
+        }
+        is Response.Success -> {
+            HomeScreen(
+                games = response.data,
+                selectedGame = selectedGame,
+                onSelectGame = viewModel::selectGame,
+                onStatusChange = viewModel::changeGameStatus,
+                modifier = modifier
+            )
+        }
+    }
+
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
+fun HomeScreen(
+    games: List<Game>,
+    selectedGame: Game?,
+    onSelectGame: (Game) -> Unit,
+    onStatusChange: (Game, Game.Status) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val navigator = rememberListDetailPaneScaffoldNavigator()
+
+    BackHandler(navigator.canNavigateBack()) {
+        navigator.navigateBack()
+    }
+
+    ListDetailPaneScaffold(
+        directive = navigator.scaffoldDirective,
+        value = navigator.scaffoldValue,
+        listPane = {
+            AnimatedPane {
+                GameListView(games = games) { game ->
+                    GameCardView(
+                        game = game,
+                        onClick = {
+                            onSelectGame(game)
+                            navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+                        },
+                        onStatusChange = { onStatusChange(game, it) }
+                    )
+                }
+            }
+        },
+        detailPane = {
+            AnimatedPane {
+                selectedGame?.let { game ->
+                    GameDetailsView(
+                        game = game,
+                        onStatusChange = { onStatusChange(game, it) }
+                    )
+                }
+            }
+        },
         modifier = modifier
     )
 }
 
-@Composable
-fun HomeScreen(
-    games: List<Game>,
-    onCardClick: (Game) -> Unit,
-    onStatusChange: (Game, Game.Status) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(games) { game ->
-            GameCardView(
-                game = game,
-                onClick = { onCardClick(game) },
-                onStatusChange = { status -> onStatusChange(game, status) }
-            )
-        }
-    }
-}
-
 @Preview(name = "HomeScreen", showBackground = true)
 @Composable
-private fun PreviewHomeScreen() {
+fun PreviewHomeScreen() {
+    val games = (0..<10).map { Game.mockGame(it.toString()) }
+
     HomeScreen(
-        games = (1..10).map { Game.mockGame() },
-        onCardClick = {},
-        onStatusChange = { _: Game, _: Game.Status -> },
+        games = games,
+        selectedGame = null,
+        onSelectGame = { },
+        onStatusChange = { _, _ -> }
     )
 }

@@ -9,10 +9,8 @@ const val HOME_ROUTE = "home"
 
 fun NavController.navigateToHome() = navigate(HOME_ROUTE)
 
-fun NavGraphBuilder.homeScreen(onGameCardClick: (String) -> Unit) {
+fun NavGraphBuilder.homeScreen() {
     composable(route = HOME_ROUTE) {
-        HomeScreen(
-            onGameCardClick = { game -> onGameCardClick(game.id) }
-        )
+        HomeScreen()
     }
 }

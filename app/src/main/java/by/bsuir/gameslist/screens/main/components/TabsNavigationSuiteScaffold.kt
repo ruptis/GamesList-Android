@@ -1,9 +1,9 @@
 package by.bsuir.gameslist.screens.main.components
 
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.ExperimentalMaterial3AdaptiveNavigationSuiteApi
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -13,11 +13,12 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import by.bsuir.gameslist.screens.main.MainScreenTab
 
 @Composable
-fun BottomBar(
+fun TabsNavigationSuiteScaffold(
     navController: NavController,
-    currentDestination: NavDestination?
+    currentDestination: NavDestination?,
+    content: @Composable () -> Unit
 ) {
-    BottomBar(
+    TabsNavigationSuiteScaffold(
         tabs = listOf(
             MainScreenTab.HOME,
             MainScreenTab.COLLECTION,
@@ -27,20 +28,24 @@ fun BottomBar(
             navController.navigate(tab.route)
         },
         currentDestination = currentDestination
-    )
+    ) {
+        content()
+    }
 }
 
+@OptIn(ExperimentalMaterial3AdaptiveNavigationSuiteApi::class)
 @Composable
-fun BottomBar(
+fun TabsNavigationSuiteScaffold(
     tabs: List<MainScreenTab>,
     onTabClick: (MainScreenTab) -> Unit,
-    currentDestination: NavDestination?
+    currentDestination: NavDestination?,
+    content: @Composable () -> Unit
 ) {
-    NavigationBar {
+    NavigationSuiteScaffold(navigationSuiteItems = {
         tabs.forEach { tab ->
             val selected = currentDestination.isSelected(tab.route)
 
-            NavigationBarItem(
+            item(
                 selected = selected,
                 onClick = { onTabClick(tab) },
                 icon = {
@@ -52,6 +57,8 @@ fun BottomBar(
                 label = { Text(tab.title) }
             )
         }
+    }) {
+        content()
     }
 }
 

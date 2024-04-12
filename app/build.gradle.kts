@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -62,10 +63,15 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation(platform("androidx.compose:compose-bom:2024.03.00"))
+    implementation("androidx.compose.material3:material3:1.3.0-alpha04")
+    implementation("androidx.compose.material3.adaptive:adaptive:1.0.0-alpha10")
+    implementation("androidx.compose.material3.adaptive:adaptive-layout:1.0.0-alpha10")
+    implementation("androidx.compose.material3.adaptive:adaptive-navigation:1.0.0-alpha10")
+    implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.0.0-alpha05")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.49")
+    implementation("com.google.firebase:firebase-firestore:24.11.1")
     kapt("com.google.dagger:hilt-compiler:2.48")
 
     testImplementation("junit:junit:4.13.2")

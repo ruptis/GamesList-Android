@@ -18,7 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import by.bsuir.gameslist.app.navigation.MAIN_TABS_GRAPH
 import by.bsuir.gameslist.app.navigation.mainTabsGraph
-import by.bsuir.gameslist.screens.main.components.BottomBar
+import by.bsuir.gameslist.screens.main.components.TabsNavigationSuiteScaffold
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,31 +32,28 @@ fun MainScreen(
     val screenTitle =
         MainScreenTab.fromRoute(currentDestination?.route ?: MainScreenTab.HOME.route).title
 
-    Scaffold(
-        bottomBar = {
-            BottomBar(
+    TabsNavigationSuiteScaffold(
+        navController = navController,
+        currentDestination = currentDestination
+    ) {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = { Text(screenTitle) },
+                    scrollBehavior = topBarScrollBehavior,
+                )
+            }, modifier = modifier, contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
+        ) { paddingValues ->
+            NavHost(
                 navController = navController,
-                currentDestination = currentDestination
-            )
-        },
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(screenTitle) },
-                scrollBehavior = topBarScrollBehavior,
-            )
-        },
-        modifier = modifier,
-        contentWindowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp)
-    ) { paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = MAIN_TABS_GRAPH,
-            modifier = modifier
-                .padding(paddingValues)
-                .consumeWindowInsets(paddingValues)
-                .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
-        ) {
-            mainTabsGraph(navController = navController)
+                startDestination = MAIN_TABS_GRAPH,
+                modifier = modifier
+                    .padding(paddingValues)
+                    .consumeWindowInsets(paddingValues)
+                    .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
+            ) {
+                mainTabsGraph()
+            }
         }
     }
 }

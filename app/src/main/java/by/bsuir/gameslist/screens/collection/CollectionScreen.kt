@@ -1,6 +1,5 @@
 package by.bsuir.gameslist.screens.collection
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
@@ -19,10 +18,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.bsuir.gameslist.model.Game
-import by.bsuir.gameslist.screens.home.HomeScreen
+import by.bsuir.gameslist.ui.components.GameListView
+import by.bsuir.gameslist.screens.collection.components.GameRowView
+import by.bsuir.gameslist.ui.theme.GamesListTheme
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionScreen(
     modifier: Modifier = Modifier
@@ -57,12 +58,13 @@ fun CollectionScreen(
                 .fillMaxSize()
         ) { page ->
             val tab = tabs[page]
-            HomeScreen(
-                games = games.filter { it.status == tab.status },
-                onCardClick = {},
-                onStatusChange = { _, _ -> },
-                modifier = modifier
-            )
+            GameListView(games = games.filter { it.status == tab.status }) { game ->
+                GameRowView(
+                    game = game,
+                    onClick = { /*TODO*/ },
+                    onStatusChange = {}
+                )
+            }
         }
     }
 }
@@ -70,5 +72,7 @@ fun CollectionScreen(
 @Preview(name = "CollectionScreen", showBackground = true)
 @Composable
 private fun PreviewCollectionScreen() {
-    CollectionScreen()
+    GamesListTheme {
+        CollectionScreen()
+    }
 }
