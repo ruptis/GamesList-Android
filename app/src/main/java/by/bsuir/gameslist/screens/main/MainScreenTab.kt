@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import by.bsuir.gameslist.R
 import by.bsuir.gameslist.screens.collection.navigation.COLLECTION_ROUTE
 import by.bsuir.gameslist.screens.home.navigation.HOME_ROUTE
+import by.bsuir.gameslist.screens.profile.navigation.PROFILE_ROUTE
 
 enum class MainScreenTab(
     val route: String,
@@ -13,7 +14,7 @@ enum class MainScreenTab(
 ) {
     HOME(HOME_ROUTE, "Home", R.drawable.home, R.drawable.home_filled),
     COLLECTION(COLLECTION_ROUTE, "Collection", R.drawable.collection, R.drawable.collection_filled),
-    PROFILE("profile", "Profile", R.drawable.person, R.drawable.person_filled);
+    PROFILE(PROFILE_ROUTE, "Profile", R.drawable.person, R.drawable.person_filled);
 
     companion object {
         fun fromRoute(route: String): MainScreenTab {

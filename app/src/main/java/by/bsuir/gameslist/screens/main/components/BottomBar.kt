@@ -23,7 +23,9 @@ fun BottomBar(
             MainScreenTab.COLLECTION,
             MainScreenTab.PROFILE
         ),
-        navController = navController,
+        onTabClick = { tab ->
+            navController.navigate(tab.route)
+        },
         currentDestination = currentDestination
     )
 }
@@ -31,7 +33,7 @@ fun BottomBar(
 @Composable
 fun BottomBar(
     tabs: List<MainScreenTab>,
-    navController: NavController,
+    onTabClick: (MainScreenTab) -> Unit,
     currentDestination: NavDestination?
 ) {
     NavigationBar {
@@ -40,7 +42,7 @@ fun BottomBar(
 
             NavigationBarItem(
                 selected = selected,
-                onClick = { navController.navigate(tab.route) },
+                onClick = { onTabClick(tab) },
                 icon = {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = if (selected) tab.selectedIcon else tab.icon),

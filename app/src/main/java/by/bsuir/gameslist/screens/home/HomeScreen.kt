@@ -8,9 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,7 +18,6 @@ import by.bsuir.gameslist.screens.home.components.GameCardView
 fun HomeScreen(
     onGameCardClick: (Game) -> Unit,
     modifier: Modifier = Modifier,
-    nestedScrollConnection: NestedScrollConnection = rememberNestedScrollInteropConnection(),
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val games by viewModel.games.collectAsState(emptyList())
@@ -30,7 +26,6 @@ fun HomeScreen(
         games = games,
         onCardClick = onGameCardClick,
         onStatusChange = viewModel::changeGameStatus,
-        nestedScrollConnection = nestedScrollConnection,
         modifier = modifier
     )
 }
@@ -40,11 +35,10 @@ fun HomeScreen(
     games: List<Game>,
     onCardClick: (Game) -> Unit,
     onStatusChange: (Game, Game.Status) -> Unit,
-    modifier: Modifier = Modifier,
-    nestedScrollConnection: NestedScrollConnection = rememberNestedScrollInteropConnection()
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = modifier.nestedScroll(nestedScrollConnection),
+        modifier = modifier,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {

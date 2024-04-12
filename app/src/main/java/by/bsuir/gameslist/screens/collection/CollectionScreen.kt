@@ -16,8 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.bsuir.gameslist.model.Game
@@ -27,8 +25,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun CollectionScreen(
-    modifier: Modifier = Modifier,
-    nestedScrollConnection: NestedScrollConnection = rememberNestedScrollInteropConnection()
+    modifier: Modifier = Modifier
 ) {
     val games by remember {
         mutableStateOf((1..10).map { Game.mockGame(it.toString(), Game.Status.entries.random()) })
@@ -64,7 +61,7 @@ fun CollectionScreen(
                 games = games.filter { it.status == tab.status },
                 onCardClick = {},
                 onStatusChange = { _, _ -> },
-                nestedScrollConnection = nestedScrollConnection
+                modifier = modifier
             )
         }
     }
