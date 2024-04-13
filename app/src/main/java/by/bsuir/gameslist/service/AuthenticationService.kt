@@ -1,10 +1,12 @@
 package by.bsuir.gameslist.service
 
-import kotlinx.coroutines.flow.StateFlow
+import by.bsuir.gameslist.model.Response
+import kotlinx.coroutines.flow.Flow
 
 interface AuthenticationService {
-    val isAuthenticated: StateFlow<Boolean>
-    fun signIn(email: String, password: String)
-    fun signUp(email: String, password: String)
+    fun observeUserId(): Flow<String?>
+    fun getUserId(): String?
+    suspend fun signIn(email: String, password: String): Response<String>
+    suspend fun signUp(email: String, name: String, password: String): Response<String>
     fun signOut()
 }

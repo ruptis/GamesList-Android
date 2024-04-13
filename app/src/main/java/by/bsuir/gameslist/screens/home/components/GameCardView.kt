@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsuir.gameslist.model.Game
+import by.bsuir.gameslist.model.Status
 import by.bsuir.gameslist.ui.components.GameActionsView
 import by.bsuir.gameslist.ui.components.Tag
 
@@ -28,7 +29,7 @@ import by.bsuir.gameslist.ui.components.Tag
 fun GameCardView(
     game: Game,
     onClick: () -> Unit,
-    onStatusChange: (Game.Status) -> Unit,
+    onStatusChange: (Status) -> Unit,
     modifier: Modifier = Modifier
 ) {
     ElevatedCard(
@@ -66,7 +67,7 @@ fun GameCardView(
                     }
 
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        game.platformsData?.forEach { platform ->
+                        game.platforms.forEach { platform ->
                             Tag(
                                 text = platform.abbreviation,
                                 modifier = Modifier.padding(4.dp)

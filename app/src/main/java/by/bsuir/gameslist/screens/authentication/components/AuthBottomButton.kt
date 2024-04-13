@@ -1,4 +1,4 @@
-package by.bsuir.gameslist.screens.authentication.views.components
+package by.bsuir.gameslist.screens.authentication.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

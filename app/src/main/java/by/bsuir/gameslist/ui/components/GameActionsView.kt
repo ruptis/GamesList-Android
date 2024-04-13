@@ -13,14 +13,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.bsuir.gameslist.R
-import by.bsuir.gameslist.model.Game
+import by.bsuir.gameslist.model.Status
 import by.bsuir.gameslist.ui.theme.GamesListTheme
 import by.bsuir.gameslist.ui.theme.statusColors
 
 @Composable
 fun GameActionsView(
-    status: Game.Status?,
-    onStatusChange: (Game.Status) -> Unit, modifier:
+    status: Status?,
+    onStatusChange: (Status) -> Unit, modifier:
     Modifier = Modifier
 ) {
     Row(
@@ -29,7 +29,7 @@ fun GameActionsView(
         ActionButton(
             onStatusChange,
             status,
-            Game.Status.PLAYING,
+            Status.Playing,
             R.drawable.gamepad_filled,
             R.drawable.gamepad,
             MaterialTheme.statusColors.playing,
@@ -38,7 +38,7 @@ fun GameActionsView(
         ActionButton(
             onStatusChange,
             status,
-            Game.Status.PLANNING,
+            Status.Planning,
             R.drawable.clock_filled,
             R.drawable.clock,
             MaterialTheme.statusColors.planning,
@@ -47,7 +47,7 @@ fun GameActionsView(
         ActionButton(
             onStatusChange,
             status,
-            Game.Status.PASSED,
+            Status.Passed,
             R.drawable.check_circle_filled,
             R.drawable.check_circle,
             MaterialTheme.statusColors.passed,
@@ -56,7 +56,7 @@ fun GameActionsView(
         ActionButton(
             onStatusChange,
             status,
-            Game.Status.ABANDONED,
+            Status.Abandoned,
             R.drawable.stop_circle_filled,
             R.drawable.stop_circle,
             MaterialTheme.statusColors.abandoned,
@@ -67,9 +67,9 @@ fun GameActionsView(
 
 @Composable
 private fun ActionButton(
-    onStatusChange: (Game.Status) -> Unit,
-    status: Game.Status?,
-    initialStatus: Game.Status,
+    onStatusChange: (Status) -> Unit,
+    status: Status?,
+    initialStatus: Status,
     selectedIcon: Int,
     icon: Int,
     selectedColor: Color,
@@ -95,7 +95,7 @@ private fun ActionButton(
 @Composable
 @Preview(name = "GameActionsView", showBackground = true)
 fun GameActionsViewPreview() {
-    var status = remember { Game.Status.PLAYING }
+    var status = remember { Status.Playing }
 
     GamesListTheme {
         GameActionsView(

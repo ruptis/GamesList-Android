@@ -30,6 +30,7 @@ fun Tag(
             text = text,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = textStyle,
+            maxLines = 1,
             modifier = modifier
         )
     }

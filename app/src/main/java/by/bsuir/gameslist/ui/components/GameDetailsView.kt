@@ -23,11 +23,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsuir.gameslist.model.Game
+import by.bsuir.gameslist.model.Status
 
 @Composable
 fun GameDetailsView(
     game: Game,
-    onStatusChange: (Game.Status) -> Unit,
+    onStatusChange: (Status) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -66,7 +67,7 @@ fun GameDetailsView(
 @Composable
 private fun TitleSectionView(
     game: Game,
-    onStatusChange: (Game.Status) -> Unit
+    onStatusChange: (Status) -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -114,13 +115,12 @@ private fun GameInformationView(game: Game) {
         )
         InfoRowView(
             title = "Release date",
-            value = game.releaseDate
+            value = game.releaseDate.toString()
         )
         InfoRowView(
             title = "Platforms",
-            value = game.platformsData
-                ?.joinToString(", ", transform = { it.name })
-                ?: "Unknown"
+            value = game.platforms
+                .joinToString(", ", transform = { it.name })
         )
         InfoRowView(
             title = "Genres",

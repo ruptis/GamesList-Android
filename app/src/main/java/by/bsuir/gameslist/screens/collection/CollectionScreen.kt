@@ -13,11 +13,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.bsuir.gameslist.model.Game
+import by.bsuir.gameslist.model.Status
 import by.bsuir.gameslist.ui.components.GameListView
 import by.bsuir.gameslist.screens.collection.components.GameRowView
 import by.bsuir.gameslist.ui.theme.GamesListTheme
@@ -29,7 +31,7 @@ fun CollectionScreen(
     modifier: Modifier = Modifier
 ) {
     val games by remember {
-        mutableStateOf((1..10).map { Game.mockGame(it.toString(), Game.Status.entries.random()) })
+        mutableStateOf((1..10).map { Game.mockGame(it.toString(), Status.entries.random()) })
     }
     val tabs = CollectionTab.entries
     val pagerState = rememberPagerState(pageCount = { tabs.size })
@@ -55,7 +57,8 @@ fun CollectionScreen(
         HorizontalPager(
             state = pagerState, modifier = Modifier
                 .weight(1f)
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalAlignment = Alignment.Top
         ) { page ->
             val tab = tabs[page]
             GameListView(games = games.filter { it.status == tab.status }) { game ->
