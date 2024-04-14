@@ -74,6 +74,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.49")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
     implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("io.coil-kt:coil-compose:2.6.0")
     kapt("com.google.dagger:hilt-compiler:2.48")
 
     testImplementation("junit:junit:4.13.2")

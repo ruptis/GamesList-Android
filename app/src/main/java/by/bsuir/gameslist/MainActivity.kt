@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
-import by.bsuir.gameslist.app.GamesListApp
+import by.bsuir.gameslist.ui.app.GamesListApp
 import by.bsuir.gameslist.ui.theme.GamesListTheme
 import dagger.hilt.android.AndroidEntryPoint
 

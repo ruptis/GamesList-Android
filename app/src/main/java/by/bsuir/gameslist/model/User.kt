@@ -1,6 +1,6 @@
 package by.bsuir.gameslist.model
 
-import com.google.type.Date
+import java.time.LocalDate
 
 data class User(
     var id: String,
@@ -8,10 +8,10 @@ data class User(
     var email: String,
     var country: String?,
     var gender: Gender?,
-    var dateOfBirth: Date?,
-    val dateOfRegistration: Date,
+    var dateOfBirth: LocalDate?,
+    val dateOfRegistration: LocalDate,
     var bio: String?,
-    var links: List<String>?,
+    var links: String?,
     var gamesCount: Int,
     var passedGamesCount: Int
 ) {

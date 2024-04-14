@@ -1,14 +1,14 @@
 package by.bsuir.gameslist.ui.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -18,12 +18,15 @@ import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsuir.gameslist.model.Game
 import by.bsuir.gameslist.model.Status
+import coil.compose.AsyncImage
 
 @Composable
 fun GameDetailsView(
@@ -35,11 +38,15 @@ fun GameDetailsView(
         modifier = modifier
     ) {
         item {
-            Box(
+            AsyncImage(
+                model = game.cover,
+                contentDescription = "cover",
                 modifier = Modifier
-                    .background(Color.Gray, MaterialTheme.shapes.medium)
+                    .background(color = Color.Gray, shape = MaterialTheme.shapes.medium)
                     .fillMaxWidth()
                     .height(300.dp)
+                    .clip(MaterialTheme.shapes.medium),
+                contentScale = ContentScale.Crop
             )
         }
 
@@ -130,26 +137,6 @@ private fun GameInformationView(game: Game) {
 }
 
 @Composable
-private fun InfoRowView(
-    title: String,
-    value: String
-) {
-    Row {
-        Text(
-            text = "$title: ",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-    }
-}
-
-@Composable
 private fun DescriptionSectionView(game: Game) {
     HorizontalDivider(
         modifier = Modifier.padding(top = 16.dp)
@@ -198,20 +185,22 @@ private fun GameScreenshotsView(game: Game) {
     HorizontalMultiBrowseCarousel(
         state = carouselState,
         preferredItemWidth = 384.dp,
-        modifier = Modifier.height(216.dp)
+        modifier = Modifier.height(216.dp),
+        itemSpacing = 4.dp
     ) {
-        game.screenshots.forEach { screenshot ->
-            Box(
-                modifier = Modifier
-                    .height(1080.dp)
-                    .width(1920.dp)
-                    .background(Color.Gray)
-            )
-        }
-
+        AsyncImage(
+            model = game.screenshots[it],
+            contentDescription = "screenshot",
+            modifier = Modifier
+                .background(color = Color.Gray, shape = MaterialTheme.shapes.medium)
+                .fillMaxSize()
+                .clip(MaterialTheme.shapes.medium),
+            contentScale = ContentScale.Crop
+        )
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(name = "GameDetailsView", showBackground = true)
 @Composable
 private fun PreviewGameDetailsView() {
