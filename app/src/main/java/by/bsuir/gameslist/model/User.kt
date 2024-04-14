@@ -16,8 +16,8 @@ data class User(
     var passedGamesCount: Int
 ) {
     enum class Gender {
-        FEMALE,
-        MALE,
-        OTHER
+        Female,
+        Male,
+        Other
     }
 }

@@ -1,5 +1,7 @@
 package by.bsuir.gameslist.screens.collection.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,9 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsuir.gameslist.model.Game
+import by.bsuir.gameslist.model.Platform
 import by.bsuir.gameslist.model.Status
 import by.bsuir.gameslist.ui.components.GameActionsView
 import by.bsuir.gameslist.ui.components.Tag
+import java.time.LocalDate
 
 @Composable
 fun GameRowView(
@@ -33,11 +37,12 @@ fun GameRowView(
 ) {
     ElevatedCard(
         onClick = onClick,
-        modifier = modifier.height(88.dp)
+        modifier = modifier
+            .height(88.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
                 modifier = modifier
@@ -47,14 +52,16 @@ fun GameRowView(
             )
 
             Column(
-                modifier = modifier.padding(5.dp),
                 horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = modifier
+                    .padding(5.dp)
+                    .width(132.dp)
             ) {
                 Text(
                     text = game.title,
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     maxLines = 1
                 )
 
@@ -85,17 +92,34 @@ fun GameRowView(
 
             GameActionsView(
                 status = game.status,
-                onStatusChange = onStatusChange
+                onStatusChange = onStatusChange,
+                modifier = modifier
             )
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(name = "GameRowView")
 @Composable
 private fun PreviewGameRowView() {
     GameRowView(
-        game = Game.mockGame(),
+        game = Game(
+            id = "0",
+            title = "Game Title",
+            releaseDate = LocalDate.now(),
+            description = "desc",
+            genres = listOf("Action", "Adventure"),
+            developer = "Developer",
+            publisher = "Publisher",
+            screenshots = listOf("", "", "", "", "", "", ""),
+            cover = "",
+            platforms = listOf(
+                Platform("PC", "PC"),
+                Platform("PlayStation 5", "PS5")
+            ),
+            status = Status.Playing
+        ),
         onClick = {},
         onStatusChange = {}
     )

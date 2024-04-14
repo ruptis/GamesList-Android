@@ -15,3 +15,4 @@ enum class CollectionTab(
     PassedTab("Passed", Status.Passed, R.drawable.check_circle, R.drawable.check_circle_filled),
     AbandonedTab("Abandoned", Status.Abandoned, R.drawable.stop_circle, R.drawable.stop_circle_filled);
 }
+
